@@ -8,8 +8,14 @@ action "action-filter" {
   args = "action do-index"
 }
 
+action "Touch env" {
+  uses = "actions/bin/sh@master"
+  needs = ["action-filter"]
+  args = ["touch .env"]
+}
+
 action "Algolia scraper" {
   uses = "docker://algolia/docsearch-scraper"
-  needs = ["action-filter"]
-  args = "--env-file=env -e \"CONFIG=$(cat docsearch.json | jq -r tostring)\" "
+  needs = ["Touch env"]
+  args = "--env-file .env"
 }

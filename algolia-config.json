@@ -1,0 +1,25 @@
+{
+  "index_name": "blog-inteach-io",
+  "start_urls": [
+    {
+      "url": "https://admiring-einstein-bb643f.netlify.com/(?P<lang>.*?)/blog",
+      "variables": {
+        "lang": [
+          "en",
+          "fr"
+        ]
+      }
+    }
+  ],
+  "stop_urls": [],
+  "selectors": {
+    "lvl0": "main > header h1",
+    "lvl1": "main .post-content h1",
+    "lvl2": "main .post-content h2",
+    "lvl3": "main .post-content h3",
+    "lvl4": "main .post-content h4",
+    "lvl5": "main .post-content h5",
+    "text": "main .post-content p, main .post-content li"
+  },
+  "nb_hits": 91
+}
