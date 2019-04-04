@@ -11,4 +11,5 @@ action "action-filter" {
 action "Algolia scraper" {
   uses = "./action-scraper"
   needs = ["action-filter"]
+  secrets = ["API_KEY", "APPLICATION_ID"]
 }
