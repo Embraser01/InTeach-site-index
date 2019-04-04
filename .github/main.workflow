@@ -9,6 +9,6 @@ action "action-filter" {
 }
 
 action "Algolia scraper" {
-  uses = "./action-scraper"
-  needs = ["action-filter"]
+  uses = "Embraser01/docsearch-scraper-action@0.0.1"
+  args = ["run /github/workspace/algolia-config.json"]
 }
