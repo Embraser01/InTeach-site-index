@@ -1,4 +1,4 @@
-FROM python:3.7
+FROM python:2.7
 
 LABEL "com.github.actions.name"="Docsearch Scraper"
 LABEL "com.github.actions.description"="Scrap a website for Algolia"
