@@ -18,6 +18,7 @@ RUN add-apt-repository -y ppa:openjdk-r/ppa
 RUN apt-get update -y && apt-get install -yq \
     curl \
     wget \
+    git \
     sudo \
     gnupg \
     && curl -sL https://deb.nodesource.com/setup_8.x | sudo bash -
