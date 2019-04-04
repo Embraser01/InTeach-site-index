@@ -1,65 +1,36 @@
-FROM ubuntu:18.04
-MAINTAINER Algolia <documentationsearch@algolia.com>
+FROM python:3.7
 
-WORKDIR /root
+LABEL "com.github.actions.name"="Docsearch Scraper"
+LABEL "com.github.actions.description"="Scrap a website for Algolia"
+LABEL "com.github.actions.icon"="mic"
+LABEL "com.github.actions.color"="purple"
 
-# Install selenium
+LABEL "maintainer"="Marc-Antoine Fernandes <marcantoinefernandes@gmail.com>"
+
 ENV LC_ALL C
 ENV DEBIAN_FRONTEND noninteractive
 ENV DEBCONF_NONINTERACTIVE_SEEN true
 
-RUN useradd -d /home/seleuser -m seleuser
-RUN chown -R seleuser /home/seleuser
-RUN chgrp -R seleuser /home/seleuser
+# Install google chrome
+RUN wget -q -O - https://dl-ssl.google.com/linux/linux_signing_key.pub | apt-key add -
+RUN sh -c 'echo "deb [arch=amd64] http://dl.google.com/linux/chrome/deb/ stable main" >> /etc/apt/sources.list.d/google-chrome.list'
+RUN apt-get -y update
+RUN apt-get install -y google-chrome-stable
 
-RUN apt-get update -y && apt-get install -yq \
-    software-properties-common
-RUN add-apt-repository -y ppa:openjdk-r/ppa
-RUN apt-get update -y && apt-get install -yq \
-    curl \
-    wget \
-    git \
-    sudo \
-    gnupg \
-    && curl -sL https://deb.nodesource.com/setup_8.x | sudo bash -
-RUN apt-get update -y && apt-get install -yq \
-    nodejs -yq
-RUN apt-get update -y && apt-get install -yq \
-  unzip \
-  xvfb \
-  libxi6 \
-  libgconf-2-4 \
-  default-jdk
+# Install chromedriver
+RUN apt-get install -yqq unzip
+RUN wget -O /tmp/chromedriver.zip http://chromedriver.storage.googleapis.com/`curl -sS chromedriver.storage.googleapis.com/LATEST_RELEASE`/chromedriver_linux64.zip
+RUN unzip /tmp/chromedriver.zip chromedriver -d /usr/bin/
 
-RUN curl -sS -o - https://dl-ssl.google.com/linux/linux_signing_key.pub | apt-key add
-RUN echo "deb [arch=amd64]  http://dl.google.com/linux/chrome/deb/ stable main" >> /etc/apt/sources.list.d/google-chrome.list
-RUN apt-get update -y && apt-get install -yq \
-  google-chrome-stable \
-  unzip
-RUN wget -q https://chromedriver.storage.googleapis.com/73.0.3683.68/chromedriver_linux64.zip
-RUN unzip chromedriver_linux64.zip
-
-RUN mv chromedriver /usr/bin/chromedriver
-RUN chown root:root /usr/bin/chromedriver
-RUN chmod +x /usr/bin/chromedriver
-
-RUN wget -q https://selenium-release.storage.googleapis.com/3.13/selenium-server-standalone-3.13.0.jar
-RUN wget -q http://www.java2s.com/Code/JarDownload/testng/testng-6.8.7.jar.zip
-RUN unzip testng-6.8.7.jar.zip
+# set display port to avoid crash
+ENV DISPLAY=:99
 
 # Install DocSearch dependencies
 RUN git clone https://github.com/algolia/docsearch-scraper
-RUN cd docsearch-scraper
 
 ENV LANG en_US.UTF-8
 ENV PIPENV_HIDE_EMOJIS 1
-RUN apt-get update -y && apt-get install -yq \
-    python-pip
 RUN pip install pipenv
-RUN pipenv install
-
-# Mandatory file
-RUN touch .env
 
 ADD entrypoint.sh /entrypoint.sh
 ENTRYPOINT ["/entrypoint.sh"]

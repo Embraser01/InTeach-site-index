@@ -1,5 +1,9 @@
 #!/usr/bin/env bash
 
-cd /root/docsearch-scraper
+pwd
 
-pipenv run ./docsearch $GITHUB_WORKSPACE/algolia-config.json
+cd docsearch-scraper/
+touch .env
+
+pipenv install
+pipenv run ./docsearch run $GITHUB_WORKSPACE/algolia-config.json
