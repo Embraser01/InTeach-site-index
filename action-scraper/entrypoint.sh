@@ -2,7 +2,7 @@
 
 pwd
 
-cd docsearch-scraper/
+cd ~/docsearch-scraper
 touch .env
 
 pipenv install

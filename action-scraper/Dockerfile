@@ -26,7 +26,7 @@ RUN unzip /tmp/chromedriver.zip chromedriver -d /usr/bin/
 ENV DISPLAY=:99
 
 # Install DocSearch dependencies
-RUN git clone https://github.com/algolia/docsearch-scraper
+RUN git clone https://github.com/algolia/docsearch-scraper ~/docsearch-scraper
 
 ENV LANG en_US.UTF-8
 ENV PIPENV_HIDE_EMOJIS 1
