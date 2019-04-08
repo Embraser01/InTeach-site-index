@@ -1,0 +1,25 @@
+{
+  "index_name": "docs",
+  "start_urls": [
+    {
+      "url": "https://docs.inteach.io/(?P<lang>.*?)/",
+      "variables": {
+        "lang": [
+          "en",
+          "fr"
+        ]
+      }
+    }
+  ],
+  "stop_urls": [],
+  "selectors": {
+    "lvl0": "#content .title",
+    "lvl1": "#content .doc-content h1",
+    "lvl2": "#content .doc-content h2",
+    "lvl3": "#content .doc-content h3",
+    "lvl4": "#content .doc-content h4",
+    "lvl5": "#content .doc-content h5",
+    "text": "#content .doc-content p, #content .doc-content li"
+  },
+  "nb_hits": 91
+}
