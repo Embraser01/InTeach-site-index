@@ -15,9 +15,9 @@ action "Algolia scraper" {
   secrets = ["API_KEY", "APPLICATION_ID"]
 }
 
-workflow "New workflow" {
-  on = "schedule(0 0 * * *)"
+workflow "Scrap sites" {
   resolves = ["Scrap InTeach - Blog", "Scrap InTeach - Docs"]
+  on = "schedule(0 0 * * *)"
 }
 
 action "Scrap InTeach - Blog" {
@@ -30,4 +30,15 @@ action "Scrap InTeach - Docs" {
   uses = "./action-scraper"
   args = "run /github/workspace/sites/inteach-docs.json"
   secrets = ["API_KEY", "APPLICATION_ID"]
+}
+
+workflow "Force site build" {
+  on = "schedule(5 * * * *)"
+  resolves = ["HTTP client"]
+}
+
+action "HTTP client" {
+  uses = "swinton/httpie.action@8ab0a0e926d091e0444fcacd5eb679d2e2d4ab3d"
+  args = "POST https://api.netlify.com/build_hooks/$HOOK_ID"
+  secrets = ["HOOK_ID"]
 }
