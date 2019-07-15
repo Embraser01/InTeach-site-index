@@ -16,13 +16,13 @@ workflow "Scrap sites every day" {
 }
 
 action "Scrap InTeach - Blog" {
-  uses = "./action-scraper"
+  uses = "Embraser01/docsearch-scraper-action@master"
   args = "run /github/workspace/sites/inteach-blog.json"
   secrets = ["API_KEY", "APPLICATION_ID"]
 }
 
 action "Scrap InTeach - Docs" {
-  uses = "./action-scraper"
+  uses = "Embraser01/docsearch-scraper-action@master"
   args = "run /github/workspace/sites/inteach-docs.json"
   secrets = ["API_KEY", "APPLICATION_ID"]
 }
