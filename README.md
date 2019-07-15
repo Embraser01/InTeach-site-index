@@ -10,4 +10,4 @@ This project uses [Github actions](https://github.com/features/actions) to scrap
 
 ## Secondary tasks
 
-This project is also used to send a webhook event to _Netlify_ in order to build the blog. It allows us to program blog posts in hugo.
+This project is also used to send a webhook event to _Netlify_ in order to build the [blog](https://inteach.io/blog). It allows us to program blog posts in hugo.
