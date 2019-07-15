@@ -1,8 +1,3 @@
-workflow "Update Blog search index" {
-  on = "repository_dispatch"
-  resolves = ["Algolia scraper"]
-}
-
 action "Filter Dispatch event" {
   uses = "actions/bin/filter@master"
   args = "action do-index"
@@ -15,7 +10,7 @@ action "Algolia scraper" {
   secrets = ["API_KEY", "APPLICATION_ID"]
 }
 
-workflow "Scrap sites" {
+workflow "Scrap sites every day" {
   resolves = ["Scrap InTeach - Blog", "Scrap InTeach - Docs"]
   on = "schedule(0 0 * * *)"
 }
@@ -32,9 +27,9 @@ action "Scrap InTeach - Docs" {
   secrets = ["API_KEY", "APPLICATION_ID"]
 }
 
-workflow "Force site build" {
-  on = "schedule(5 * * * *)"
+workflow "Build inteach.io every hour" {
   resolves = ["HTTP client"]
+  on = "schedule(5 * * * *)"
 }
 
 action "HTTP client" {
