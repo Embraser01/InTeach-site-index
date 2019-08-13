@@ -1,0 +1,14 @@
+on:
+  schedules:
+  - cron: 5 * * * *
+name: Build inteach.io every hour
+jobs:
+  httpClient:
+    name: HTTP client
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@master
+    - name: HTTP client
+      uses: swinton/httpie.action@8ab0a0e926d091e0444fcacd5eb679d2e2d4ab3d
+      with:
+        args: POST https://api.netlify.com/build_hooks/${{ secrets.HOOK_ID }}

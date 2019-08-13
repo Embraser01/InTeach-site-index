@@ -1,0 +1,27 @@
+on:
+  schedules:
+  - cron: 0 0 * * *
+name: Index sites every day
+jobs:
+  inteachDocs:
+    name: Index InTeach - Docs
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@master
+    - name: Run docsearch for InTeach - Docs
+      uses: Embraser01/docsearch-scraper-action@v0.1.0
+      with:
+        apiKey: ${{ secrets.API_KEY }}
+        applicationId: ${{ secrets.APPLICATION_ID }}
+        file: /github/workspace/sites/inteach-docs.json
+  inteachBlog:
+    name: Index InTeach - Blog
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@master
+    - name: Run docsearch for InTeach - Blog
+      uses: Embraser01/docsearch-scraper-action@v0.1.0
+      with:
+        apiKey: ${{ secrets.API_KEY }}
+        applicationId: ${{ secrets.APPLICATION_ID }}
+        file: /github/workspace/sites/inteach-blog.json
